@@ -7,6 +7,9 @@ const fs = require('fs');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Enable reverse proxy support (Render, Heroku, etc.)
+app.set('trust proxy', 1);
+
 // ===== Ensure upload directories exist =====
 const uploadDirs = ['uploads/images', 'uploads/videos', 'uploads/documents'];
 uploadDirs.forEach(dir => {
@@ -71,21 +74,29 @@ app.get('/postman/environment-local.json', (req, res) => {
   res.download(filePath, 'DummyApi_Local_Environment.postman_environment.json');
 });
 
+// Quick alias redirects for convenience if user leaves out /api
+app.get('/hello', (req, res) => res.redirect('/api/hello'));
+app.get('/products', (req, res) => res.redirect('/api/products'));
+app.get('/users', (req, res) => res.redirect('/api/users'));
+app.get('/posts', (req, res) => res.redirect('/api/posts'));
+
 // ===== Root - API Documentation Page =====
 app.get('/', (req, res) => {
-  const baseUrl = `${req.protocol}://${req.get('host')}`;
+  const protocol = req.headers['x-forwarded-proto'] || (req.secure ? 'https' : req.protocol);
+  const baseUrl = `${protocol}://${req.get('host')}`;
   res.send(generateDocPage(baseUrl));
 });
 
 // ===== 404 Handler =====
 app.use((req, res) => {
+  const protocol = req.headers['x-forwarded-proto'] || (req.secure ? 'https' : req.protocol);
   res.status(404).json({
     success: false,
     error: {
       code: 404,
       type: 'ENDPOINT_NOT_FOUND',
       message: `The endpoint ${req.method} ${req.originalUrl} does not exist.`,
-      hint: `Visit ${req.protocol}://${req.get('host')}/ for the full API documentation.`,
+      hint: `Visit ${protocol}://${req.get('host')}/ for the full API documentation.`,
     },
     timestamp: new Date().toISOString(),
   });
