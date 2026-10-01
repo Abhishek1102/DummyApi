@@ -1,6 +1,9 @@
 const jwt = require('jsonwebtoken');
 const db = require('../config/db');
 
+const JWT_SECRET = process.env.JWT_SECRET || 'practice-jwt-secret-key-2024-secure-random-string';
+const API_KEY = process.env.API_KEY || 'practice-api-key-2024';
+
 /**
  * JWT Authentication Middleware
  * Verifies Bearer token from Authorization header
@@ -36,7 +39,7 @@ function authenticateToken(req, res, next) {
   }
 
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, JWT_SECRET);
     req.user = decoded;
     req.token = token;
     next();
@@ -76,7 +79,7 @@ function optionalAuth(req, res, next) {
     try {
       const blacklisted = db.prepare('SELECT id FROM blacklisted_tokens WHERE token = ?').get(token);
       if (!blacklisted) {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const decoded = jwt.verify(token, JWT_SECRET);
         req.user = decoded;
         req.token = token;
       }
@@ -106,7 +109,7 @@ function authenticateApiKey(req, res, next) {
     });
   }
 
-  if (apiKey !== process.env.API_KEY) {
+  if (apiKey !== API_KEY) {
     return res.status(403).json({
       success: false,
       error: {

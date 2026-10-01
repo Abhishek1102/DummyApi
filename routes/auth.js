@@ -5,6 +5,11 @@ const bcrypt = require('bcryptjs');
 const db = require('../config/db');
 const { authenticateToken } = require('../middleware/auth');
 
+const JWT_SECRET = process.env.JWT_SECRET || 'practice-jwt-secret-key-2024-secure-random-string';
+const JWT_REFRESH_SECRET = process.env.JWT_REFRESH_SECRET || 'practice-jwt-refresh-secret-key-2024-secure-random-string';
+const JWT_EXPIRES_IN = process.env.JWT_EXPIRES_IN || '1h';
+const JWT_REFRESH_EXPIRES_IN = process.env.JWT_REFRESH_EXPIRES_IN || '7d';
+
 // ========================================
 // 12. POST /api/auth/register - Register
 // ========================================
@@ -59,14 +64,14 @@ router.post('/register', (req, res) => {
   // Generate tokens
   const accessToken = jwt.sign(
     { id: user.id, email: user.email, role: user.role },
-    process.env.JWT_SECRET,
-    { expiresIn: process.env.JWT_EXPIRES_IN }
+    JWT_SECRET,
+    { expiresIn: JWT_EXPIRES_IN }
   );
 
   const refreshToken = jwt.sign(
     { id: user.id, email: user.email },
-    process.env.JWT_REFRESH_SECRET,
-    { expiresIn: process.env.JWT_REFRESH_EXPIRES_IN }
+    JWT_REFRESH_SECRET,
+    { expiresIn: JWT_REFRESH_EXPIRES_IN }
   );
 
   res.status(201).json({
@@ -77,7 +82,7 @@ router.post('/register', (req, res) => {
       access_token: accessToken,
       refresh_token: refreshToken,
       token_type: 'Bearer',
-      expires_in: process.env.JWT_EXPIRES_IN,
+      expires_in: JWT_EXPIRES_IN,
     },
     timestamp: new Date().toISOString(),
   });
@@ -136,14 +141,14 @@ router.post('/login', (req, res) => {
   // Generate tokens
   const accessToken = jwt.sign(
     { id: user.id, email: user.email, role: user.role },
-    process.env.JWT_SECRET,
-    { expiresIn: process.env.JWT_EXPIRES_IN }
+    JWT_SECRET,
+    { expiresIn: JWT_EXPIRES_IN }
   );
 
   const refreshToken = jwt.sign(
     { id: user.id, email: user.email },
-    process.env.JWT_REFRESH_SECRET,
-    { expiresIn: process.env.JWT_REFRESH_EXPIRES_IN }
+    JWT_REFRESH_SECRET,
+    { expiresIn: JWT_REFRESH_EXPIRES_IN }
   );
 
   const { password: _, ...userWithoutPassword } = user;
@@ -156,7 +161,7 @@ router.post('/login', (req, res) => {
       access_token: accessToken,
       refresh_token: refreshToken,
       token_type: 'Bearer',
-      expires_in: process.env.JWT_EXPIRES_IN,
+      expires_in: JWT_EXPIRES_IN,
     },
     timestamp: new Date().toISOString(),
   });
@@ -181,7 +186,7 @@ router.post('/refresh', (req, res) => {
   }
 
   try {
-    const decoded = jwt.verify(refresh_token, process.env.JWT_REFRESH_SECRET);
+    const decoded = jwt.verify(refresh_token, JWT_REFRESH_SECRET);
     const user = db.prepare('SELECT id, email, role FROM users WHERE id = ?').get(decoded.id);
 
     if (!user) {
@@ -198,14 +203,14 @@ router.post('/refresh', (req, res) => {
 
     const newAccessToken = jwt.sign(
       { id: user.id, email: user.email, role: user.role },
-      process.env.JWT_SECRET,
-      { expiresIn: process.env.JWT_EXPIRES_IN }
+      JWT_SECRET,
+      { expiresIn: JWT_EXPIRES_IN }
     );
 
     const newRefreshToken = jwt.sign(
       { id: user.id, email: user.email },
-      process.env.JWT_REFRESH_SECRET,
-      { expiresIn: process.env.JWT_REFRESH_EXPIRES_IN }
+      JWT_REFRESH_SECRET,
+      { expiresIn: JWT_REFRESH_EXPIRES_IN }
     );
 
     res.json({
@@ -215,7 +220,7 @@ router.post('/refresh', (req, res) => {
         access_token: newAccessToken,
         refresh_token: newRefreshToken,
         token_type: 'Bearer',
-        expires_in: process.env.JWT_EXPIRES_IN,
+        expires_in: JWT_EXPIRES_IN,
       },
       timestamp: new Date().toISOString(),
     });
