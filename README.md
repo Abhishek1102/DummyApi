@@ -2,6 +2,19 @@
 
 A ready-to-deploy Node.js + Express API server with **48 endpoints** designed for Android & Flutter developers to practice API integration, prepare for interviews, and learn REST API concepts.
 
+## 📮 Postman Collection (All 48 APIs Ready-to-Test!)
+
+A production-grade Postman collection (v2.1.0) and environments are included in the [`/postman`](./postman) folder:
+- **Collection:** [`postman/DummyApi.postman_collection.json`](./postman/DummyApi.postman_collection.json)
+- **Render Cloud Environment:** [`postman/DummyApi_Render_Environment.postman_environment.json`](./postman/DummyApi_Render_Environment.postman_environment.json)
+- **Localhost Environment:** [`postman/DummyApi_Local_Environment.postman_environment.json`](./postman/DummyApi_Local_Environment.postman_environment.json)
+- **Detailed Guide:** [`postman/POSTMAN_GUIDE.md`](./postman/POSTMAN_GUIDE.md)
+
+### ✨ Smart Automation in Postman
+- **Auto JWT Capture:** Logging in or registering automatically stores `{{authToken}}` and `{{refreshToken}}` in collection variables.
+- **Dynamic Resource Chaining:** Newly created product IDs, post IDs, and comment IDs are auto-saved for subsequent calls.
+- **Pre-configured Tests:** Status code and schema assertions on every endpoint.
+
 ## 🏃 Quick Start
 
 ```bash
@@ -12,7 +25,7 @@ npm install
 npm start
 
 # 3. Open in browser
-# Visit http://localhost:3000 for full API docs
+# Visit http://localhost:3000 for full API docs & one-click Postman download
 ```
 
 For development with auto-restart:

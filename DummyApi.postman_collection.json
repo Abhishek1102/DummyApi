@@ -1,0 +1,2589 @@
+{
+  "info": {
+    "_postman_id": "7f4c9c1b-29a3-4a33-bf98-dummyapi1234",
+    "name": "DummyApi - Complete REST API Suite (48 Endpoints)",
+    "description": "# 🚀 DummyApi - Complete REST API Practice Server\n\nWelcome to the **official Postman Collection** for **DummyApi** — a production-ready practice REST API server built specifically for **Android (Retrofit/OkHttp/Ktor)** and **Flutter (Dio/Http)** developers, QA testers, and backend learners.\n\n---\n\n### 🌐 Quick Reference & Credentials\n- **Live Base URL:** `https://dummyapi-tk55.onrender.com`\n- **Localhost URL:** `http://localhost:3000`\n- **Test Account Email:** `test@example.com`\n- **Test Account Password:** `password123`\n- **Master API Key:** `practice-api-key-2024`\n\n---\n\n### ⚡ Smart Collection Features\n1. **Automated JWT Token Capture:** Running **Module 3: Login** or **Register** automatically captures the `access_token` and sets the collection variable `{{authToken}}`, authorizing all protected routes immediately!\n2. **Refresh Token Flow:** Automated capture for `{{refreshToken}}` seamlessly updates your tokens.\n3. **Dynamic Resource Chaining:** Creating a product, post, or comment automatically saves `{{productId}}`, `{{postId}}`, and `{{commentId}}` for dependent requests.\n4. **Multi-Environment Support:** Switch seamlessly between **Render Cloud** and **Localhost** environments.\n5. **Real-World Scenarios:** Covers multipart file uploads, rate limiting, token invalidation/blacklisting, content negotiation, random 500 errors, timeout simulation, and comprehensive HTTP status codes.\n\n---\n\n### 📚 Structure (8 Core Modules)\n1. **🟢 Module 1: Basic CRUD** — Hello, Products CRUD (GET, POST, PUT, PATCH, DELETE)\n2. **🔵 Module 2: Query Parameters & Filtering** — Pagination, multi-field search, sorting, categories\n3. **🟡 Module 3: Authentication & Authorization** — JWT auth, refresh token flow, profile, password change, logout\n4. **🟠 Module 4: Custom Headers & API Keys** — API key auth, header echo, device headers, content negotiation\n5. **🔴 Module 5: File Uploads** — Single & multiple image uploads, video, document, mixed multipart\n6. **🟣 Module 6: Posts & Comments** — Nested resources, relations, toggle likes\n7. **⚫ Module 7: Advanced & Interview Topics** — Delayed response, random errors, form URL-encoded, binary image stream, status code mock, rate limits, strict validation\n8. **⚪ Module 8: Error Simulation** — 400, 401, 403, 404, 500, and infinite timeout simulation",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "https://dummyapi-tk55.onrender.com",
+      "type": "string"
+    },
+    {
+      "key": "apiKey",
+      "value": "practice-api-key-2024",
+      "type": "string"
+    },
+    {
+      "key": "authToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "refreshToken",
+      "value": "",
+      "type": "string"
+    },
+    {
+      "key": "testEmail",
+      "value": "test@example.com",
+      "type": "string"
+    },
+    {
+      "key": "testPassword",
+      "value": "password123",
+      "type": "string"
+    },
+    {
+      "key": "productId",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "postId",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "commentId",
+      "value": "1",
+      "type": "string"
+    },
+    {
+      "key": "userId",
+      "value": "1",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "🟢 Module 1: Basic CRUD",
+      "description": "Standard REST operations: GET, POST, PUT, PATCH, DELETE without authentication requirements. Perfect for practicing Retrofit/Dio basic setup.",
+      "item": [
+        {
+          "name": "1. Hello World Greeting",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Response is successful\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.success).to.eql(true);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/hello",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "hello"
+              ]
+            },
+            "description": "Returns a friendly greeting message. Used to verify server uptime and connectivity.\n\n### Response\n- `200 OK`: Server info & confirmation message."
+          },
+          "response": []
+        },
+        {
+          "name": "2. Get All Products",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Products array returned\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.data).to.be.an(\"array\");",
+                  "    if (jsonData.data.length > 0) {",
+                  "        pm.collectionVariables.set(\"productId\", jsonData.data[0].id);",
+                  "    }",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/products",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "products"
+              ]
+            },
+            "description": "Retrieves the complete list of products from SQLite.\n\n### Android/Flutter Tip\nGreat for populating a RecyclerView or Flutter ListView.builder."
+          },
+          "response": []
+        },
+        {
+          "name": "3. Get Product by ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Product data has valid id\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.data).to.have.property(\"id\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/products/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "products",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "{{productId}}",
+                  "description": "Path variable id"
+                }
+              ]
+            },
+            "description": "Retrieves details of a single product using a path parameter.\n\n### Android Tip (Retrofit)\n```kotlin\n@GET(\"api/products/{id}\")\nsuspend fun getProduct(@Path(\"id\") id: Int): Response<ProductResponse>\n```"
+          },
+          "response": []
+        },
+        {
+          "name": "4. Create Product (POST)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 201 Created\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "pm.test(\"Auto-save newly created productId\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.success).to.eql(true);",
+                  "    if (jsonData.data && jsonData.data.id) {",
+                  "        pm.collectionVariables.set(\"productId\", jsonData.data.id);",
+                  "        console.log(\"Updated productId variable to: \" + jsonData.data.id);",
+                  "    }",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/products",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "products"
+              ]
+            },
+            "description": "Creates a new product record in the database.\n\n### Required Fields\n- `name` (String)\n- `price` (Number)\n- `category` (String: Electronics, Clothing, Books, Sports, Home)",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Sony WH-1000XM5 Wireless Headphones\",\n  \"description\": \"Industry leading noise canceling with two processors and 8 microphones.\",\n  \"price\": 399.99,\n  \"category\": \"Electronics\",\n  \"image_url\": \"https://images.unsplash.com/photo-1505740420928-5e560c06d30e\",\n  \"stock\": 25,\n  \"rating\": 4.9\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "5. Full Update Product (PUT)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Product price updated\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.data.price).to.eql(429.99);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/products/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "products",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "{{productId}}",
+                  "description": "Path variable id"
+                }
+              ]
+            },
+            "description": "Full update of a product. In REST convention, PUT requires sending all required fields.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Sony WH-1000XM5 (Special Edition)\",\n  \"description\": \"Updated description with premium silver finish and bundle case.\",\n  \"price\": 429.99,\n  \"category\": \"Electronics\",\n  \"image_url\": \"https://images.unsplash.com/photo-1505740420928-5e560c06d30e\",\n  \"stock\": 18,\n  \"rating\": 5\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "6. Partial Update Product (PATCH)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Patched fields verified\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.data.price).to.eql(379.99);",
+                  "    pm.expect(jsonData.data.stock).to.eql(12);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PATCH",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/products/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "products",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "{{productId}}",
+                  "description": "Path variable id"
+                }
+              ]
+            },
+            "description": "Partial update. Unlike PUT, PATCH only requires the specific fields you wish to modify.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"price\": 379.99,\n  \"stock\": 12\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "7. Delete Product",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Product deletion confirmed\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.success).to.eql(true);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/products/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "products",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "{{productId}}",
+                  "description": "Path variable id"
+                }
+              ]
+            },
+            "description": "Deletes the product with the given ID from the database."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "🔵 Module 2: Query Parameters & Filtering",
+      "description": "Learn how to use query strings for pagination, multi-field search, ordering, and nested category endpoints.",
+      "item": [
+        {
+          "name": "8. Paginated Users List",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Pagination metadata is accurate\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.pagination).to.have.property(\"current_page\", 1);",
+                  "    pm.expect(jsonData.pagination).to.have.property(\"per_page\", 10);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/users?page=1&limit=10",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Filter or parameter: page"
+                },
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Filter or parameter: limit"
+                }
+              ]
+            },
+            "description": "Fetches users using `page` and `limit` query parameters.\n\n### Response Metadata\nReturns `pagination` object with `current_page`, `total_pages`, `total_items`, `has_next`, `has_previous`."
+          },
+          "response": []
+        },
+        {
+          "name": "9. Search Users (Multi-Filter)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Filters applied echoed back\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData).to.have.property(\"filters_applied\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/search?q=john&age_min=18&age_max=40&city=New%20York&role=user",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "q",
+                  "value": "john",
+                  "description": "Filter or parameter: q"
+                },
+                {
+                  "key": "age_min",
+                  "value": "18",
+                  "description": "Filter or parameter: age_min"
+                },
+                {
+                  "key": "age_max",
+                  "value": "40",
+                  "description": "Filter or parameter: age_max"
+                },
+                {
+                  "key": "city",
+                  "value": "New York",
+                  "description": "Filter or parameter: city"
+                },
+                {
+                  "key": "role",
+                  "value": "user",
+                  "description": "Filter or parameter: role"
+                }
+              ]
+            },
+            "description": "Advanced search combining keyword string `q` with numerical age ranges, city filtering, and role filters.\n\n### Android Tip\nUse `@QueryMap` in Retrofit when passing variable filters."
+          },
+          "response": []
+        },
+        {
+          "name": "10. Sort Users",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/sort?sort_by=name&order=asc",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                "sort"
+              ],
+              "query": [
+                {
+                  "key": "sort_by",
+                  "value": "name",
+                  "description": "Filter or parameter: sort_by"
+                },
+                {
+                  "key": "order",
+                  "value": "asc",
+                  "description": "Filter or parameter: order"
+                }
+              ]
+            },
+            "description": "Sort users by specific column (`name`, `email`, `age`, `city`, `created_at`, `id`) in `asc` or `desc` order."
+          },
+          "response": []
+        },
+        {
+          "name": "11. Get Products by Category",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Category matches query\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.category.toLowerCase()).to.eql(\"electronics\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/categories/:catId/products",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "categories",
+                ":catId",
+                "products"
+              ],
+              "variable": [
+                {
+                  "key": "catId",
+                  "value": "electronics",
+                  "description": "Path variable catId"
+                }
+              ]
+            },
+            "description": "Nested REST resource: retrieves all products belonging to a given category slug (`electronics`, `clothing`, `books`, `sports`, `home`)."
+          },
+          "response": []
+        },
+        {
+          "name": "11b. Get User by ID",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/users/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "users",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "{{userId}}",
+                  "description": "Path variable id"
+                }
+              ]
+            },
+            "description": "Retrieves public profile details for a specific user ID."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "🟡 Module 3: Authentication & Authorization",
+      "description": "Full JWT Authentication workflow: Register, Login, Refresh Token, Protected Profile, Change Password, and Logout (Token Invalidation).",
+      "item": [
+        {
+          "name": "12. Register New User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 201 Created\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "pm.test(\"Captures access and refresh tokens\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    if (jsonData.data && jsonData.data.access_token) {",
+                  "        pm.collectionVariables.set(\"authToken\", jsonData.data.access_token);",
+                  "        pm.collectionVariables.set(\"refreshToken\", jsonData.data.refresh_token);",
+                  "        console.log(\"Tokens updated from registration!\");",
+                  "    }",
+                  "});"
+                ]
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Ensure unique email on each run if needed",
+                  "var randomEmail = \"alex_\" + Date.now() + \"@example.com\";",
+                  "pm.variables.set(\"tempEmail\", randomEmail);",
+                  "var body = JSON.parse(pm.request.body.raw);",
+                  "body.email = randomEmail;",
+                  "pm.request.body.raw = JSON.stringify(body, null, 2);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/register",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
+            },
+            "description": "Registers a new user and returns JWT `access_token` and `refresh_token`.\n\n*Note:* The Pre-request Script appends a timestamp to the email to avoid duplicate key conflicts.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Alex Mercer\",\n  \"email\": \"alex.mercer.dev@example.com\",\n  \"password\": \"password123\",\n  \"age\": 28,\n  \"city\": \"San Francisco\",\n  \"bio\": \"Mobile App Engineer specializing in Jetpack Compose & Flutter\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "13. Login User (Auto-captures Token)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200 OK\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Auto-capture JWT tokens to collection variables\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.success).to.eql(true);",
+                  "    pm.expect(jsonData.data.access_token).to.be.a(\"string\");",
+                  "    pm.collectionVariables.set(\"authToken\", jsonData.data.access_token);",
+                  "    pm.collectionVariables.set(\"refreshToken\", jsonData.data.refresh_token);",
+                  "    console.log(\"authToken and refreshToken saved successfully!\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            },
+            "description": "Authenticates test user and automatically populates `{{authToken}}` and `{{refreshToken}}` in the Collection Variables.\n\n### Test Credentials\n- **Email:** `{{testEmail}}` (`test@example.com`)\n- **Password:** `{{testPassword}}` (`password123`)",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{testEmail}}\",\n  \"password\": \"{{testPassword}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "14. Refresh Access Token",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Tokens updated\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    if (jsonData.data && jsonData.data.access_token) {",
+                  "        pm.collectionVariables.set(\"authToken\", jsonData.data.access_token);",
+                  "        pm.collectionVariables.set(\"refreshToken\", jsonData.data.refresh_token);",
+                  "    }",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/refresh",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "refresh"
+              ]
+            },
+            "description": "Exchanges a valid `refresh_token` for a brand new `access_token` and updated `refresh_token`.\n\n### Android Architecture Tip\nUse OkHttp `Authenticator` interface to automatically intercept 401s and call this refresh endpoint!",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"refresh_token\": \"{{refreshToken}}\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "15. Get Current User Profile",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"User data returned\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.data).to.have.property(\"email\");",
+                  "    pm.collectionVariables.set(\"userId\", jsonData.data.id);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/profile",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "profile"
+              ]
+            },
+            "description": "Fetches profile info for the currently authenticated user.\n\n### Header Required\n`Authorization: Bearer {{authToken}}`",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{authToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "16. Update User Profile",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Profile updated successfully\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.data.city).to.eql(\"Austin, Texas\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/profile",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "profile"
+              ]
+            },
+            "description": "Updates the authenticated user's name, age, city, and biography.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{authToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Test User (Verified Developer)\",\n  \"age\": 29,\n  \"city\": \"Austin, Texas\",\n  \"bio\": \"Lead Mobile Architect specializing in Kotlin, Jetpack Compose, and Flutter.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "17. Change Password",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/change-password",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "change-password"
+              ]
+            },
+            "description": "Updates password after verifying the user's current password.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{authToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"current_password\": \"password123\",\n  \"new_password\": \"password123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "18. Logout (Invalidate Token)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/logout",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "logout"
+              ]
+            },
+            "description": "Logs out the user and blacklists the current JWT token in SQLite. Subsequent requests with this token will return 401 Unauthorized.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{authToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "🟠 Module 4: Custom Headers & API Keys",
+      "description": "Test API Key protection, custom header inspection, header validation, and Content Negotiation (JSON, XML, Plain Text).",
+      "item": [
+        {
+          "name": "19. API Key Protected Data",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Secret data received\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.data).to.have.property(\"secret_message\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-API-Key",
+                "value": "{{apiKey}}",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/secure/data",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "secure",
+                "data"
+              ]
+            },
+            "description": "Demonstrates API Key authentication via custom header `X-API-Key: practice-api-key-2024`.\n\n### Error Scenarios\n- Missing Header: `401 Unauthorized`\n- Invalid Key: `403 Forbidden`"
+          },
+          "response": []
+        },
+        {
+          "name": "20. Echo All Request Headers",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Custom headers reflected in response\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.data.headers).to.have.property(\"x-client-platform\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-Client-Platform",
+                "value": "Android",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-Model",
+                "value": "Google Pixel 8 Pro",
+                "type": "text"
+              },
+              {
+                "key": "X-App-Build",
+                "value": "204",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/headers/echo",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "headers",
+                "echo"
+              ]
+            },
+            "description": "Returns an exact mirror of every HTTP header sent in the incoming request. Ideal for debugging interceptors."
+          },
+          "response": []
+        },
+        {
+          "name": "21. Custom Headers Validation",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-App-Version",
+                "value": "1.0.0",
+                "type": "text"
+              },
+              {
+                "key": "X-Device-Type",
+                "value": "mobile",
+                "type": "text"
+              },
+              {
+                "key": "X-Platform",
+                "value": "Android",
+                "type": "text"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/headers/custom",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "headers",
+                "custom"
+              ]
+            },
+            "description": "Validates that client sends required custom headers: `X-App-Version` and `X-Device-Type`.\n\nReturns `400 Bad Request` if either header is missing.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"ping\": true,\n  \"screen\": \"dashboard\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "22a. Content Negotiation - JSON",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Format is JSON\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.data.format).to.eql(\"JSON\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/headers/accept",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "headers",
+                "accept"
+              ]
+            },
+            "description": "Requests JSON representation via `Accept: application/json` header."
+          },
+          "response": []
+        },
+        {
+          "name": "22b. Content Negotiation - XML",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Content-Type is XML\", function () {",
+                  "    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"xml\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/xml",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/headers/accept",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "headers",
+                "accept"
+              ]
+            },
+            "description": "Requests XML representation via `Accept: application/xml` header. Server dynamically responds with XML document!"
+          },
+          "response": []
+        },
+        {
+          "name": "22c. Content Negotiation - Plain Text",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Content-Type is text/plain\", function () {",
+                  "    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"text/plain\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "text/plain",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/headers/accept",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "headers",
+                "accept"
+              ]
+            },
+            "description": "Requests raw string representation via `Accept: text/plain` header."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "🔴 Module 5: File Uploads",
+      "description": "Multipart/form-data endpoints handling image, video, document uploads, mixed metadata, and static file download.",
+      "item": [
+        {
+          "name": "23. Upload Single Image",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// If a file was selected in Postman:",
+                  "if (pm.response.code === 201) {",
+                  "    pm.test(\"Status code is 201 Created\", function () {",
+                  "        pm.response.to.have.status(201);",
+                  "    });",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/upload/image",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "upload",
+                "image"
+              ]
+            },
+            "description": "Uploads a single image.\n\n### Multer Form Field\n- Field key: `image` (Type: File)\n\n### Android Tip (Retrofit)\n```kotlin\n@Multipart\n@POST(\"api/upload/image\")\nsuspend fun uploadImage(@Part image: MultipartBody.Part): Response<UploadResponse>\n```",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "image",
+                  "type": "file",
+                  "description": "Select an image file (JPEG, PNG, WebP up to 5MB)"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "24. Upload Multiple Images (Max 5)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    pm.test(\"Multiple images uploaded\", function () {",
+                  "        pm.expect(pm.response.json().success).to.eql(true);",
+                  "    });",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/upload/images",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "upload",
+                "images"
+              ]
+            },
+            "description": "Uploads up to 5 images concurrently in a single multipart request.\n\n### Form Field\n- Key: `images`",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "images",
+                  "type": "file",
+                  "description": "Image file 1"
+                },
+                {
+                  "key": "images",
+                  "type": "file",
+                  "description": "Image file 2"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "25. Upload Video (Max 50MB)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    pm.test(\"Video uploaded successfully\", function () {",
+                  "        pm.response.to.have.status(201);",
+                  "    });",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/upload/video",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "upload",
+                "video"
+              ]
+            },
+            "description": "Accepts video media up to 50MB. Field key: `video`.",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "video",
+                  "type": "file",
+                  "description": "Select video (MP4, MKV, WebM up to 50MB)"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "26. Upload Document (PDF/DOC/XLSX)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    pm.test(\"Document uploaded\", function () {",
+                  "        pm.response.to.have.status(201);",
+                  "    });",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/upload/document",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "upload",
+                "document"
+              ]
+            },
+            "description": "Uploads document file up to 10MB. Field key: `document`.",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "document",
+                  "type": "file",
+                  "description": "Select PDF, DOCX, CSV or XLSX file"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "27. Upload Avatar + User Form Data",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    pm.test(\"Mixed multipart uploaded\", function () {",
+                  "        pm.response.to.have.status(201);",
+                  "    });",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/upload/avatar",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "upload",
+                "avatar"
+              ]
+            },
+            "description": "Mixed multipart request: sends a binary file (`avatar`) alongside standard text fields (`name`, `bio`, `user_id`).",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "avatar",
+                  "type": "file",
+                  "description": "Avatar image file"
+                },
+                {
+                  "key": "name",
+                  "value": "Alex Mercer",
+                  "type": "text",
+                  "description": "User full name"
+                },
+                {
+                  "key": "bio",
+                  "value": "Mobile Developer & Architect",
+                  "type": "text",
+                  "description": "Biography"
+                },
+                {
+                  "key": "user_id",
+                  "value": "1",
+                  "type": "text",
+                  "description": "Associated user ID"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "28. Download / View Uploaded File",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// Validates file route",
+                  "pm.test(\"Status code is 200 or 404\", function () {",
+                  "    pm.expect([200, 404]).to.include(pm.response.code);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/upload/files/:folder/:filename",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "upload",
+                "files",
+                ":folder",
+                ":filename"
+              ],
+              "variable": [
+                {
+                  "key": "folder",
+                  "value": "images",
+                  "description": "Path variable folder"
+                },
+                {
+                  "key": "filename",
+                  "value": "sample.png",
+                  "description": "Path variable filename"
+                }
+              ]
+            },
+            "description": "Streams uploaded files back to client.\n\n### Path Params\n- `folder`: `images`, `videos`, or `documents`\n- `filename`: name of the saved file"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "🟣 Module 6: Posts & Comments (Nested Resources)",
+      "description": "Nested relationships, social interactions, comment threads, and toggling likes.",
+      "item": [
+        {
+          "name": "29. Get All Posts (with Author Info)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Post list has items\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.data).to.be.an(\"array\");",
+                  "    if (jsonData.data.length > 0) {",
+                  "        pm.collectionVariables.set(\"postId\", jsonData.data[0].id);",
+                  "    }",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/posts?page=1&limit=10",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "posts"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1",
+                  "description": "Filter or parameter: page"
+                },
+                {
+                  "key": "limit",
+                  "value": "10",
+                  "description": "Filter or parameter: limit"
+                }
+              ]
+            },
+            "description": "Fetches posts feed with nested `author` objects and `comment_count` for each post."
+          },
+          "response": []
+        },
+        {
+          "name": "30. Get Post with All Comments",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Post has comments array\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.data).to.have.property(\"comments\");",
+                  "    if (jsonData.data.comments && jsonData.data.comments.length > 0) {",
+                  "        pm.collectionVariables.set(\"commentId\", jsonData.data.comments[0].id);",
+                  "    }",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/posts/:id",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "posts",
+                ":id"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "{{postId}}",
+                  "description": "Path variable id"
+                }
+              ]
+            },
+            "description": "Fetches full details of a single post along with an array of nested comments and author details."
+          },
+          "response": []
+        },
+        {
+          "name": "31. Create Post (Auth Required)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 201 Created\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "pm.test(\"Capture new postId\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    if (jsonData.data && jsonData.data.id) {",
+                  "        pm.collectionVariables.set(\"postId\", jsonData.data.id);",
+                  "        console.log(\"Saved postId: \" + jsonData.data.id);",
+                  "    }",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/posts",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "posts"
+              ]
+            },
+            "description": "Publishes a new blog post. Requires valid Bearer token.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{authToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Mastering Clean Architecture with Kotlin & Jetpack Compose\",\n  \"content\": \"A comprehensive guide on decoupling domain logic from UI presentation in modern Android apps using Flow, StateFlow, and Coroutines.\",\n  \"image_url\": \"https://images.unsplash.com/photo-1555066931-4365d14bab8c\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "32. Add Comment to Post",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 201 Created\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "pm.test(\"Capture new commentId\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    if (jsonData.data && jsonData.data.id) {",
+                  "        pm.collectionVariables.set(\"commentId\", jsonData.data.id);",
+                  "    }",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/posts/:postId/comments",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "posts",
+                ":postId",
+                "comments"
+              ],
+              "variable": [
+                {
+                  "key": "postId",
+                  "value": "{{postId}}",
+                  "description": "Path variable postId"
+                }
+              ]
+            },
+            "description": "Adds a comment to the specified post.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{authToken}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"content\": \"Incredible guide! The StateFlow explanation saved me hours of debugging.\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "33. Delete Comment",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200 or 404/403\", function () {",
+                  "    pm.expect([200, 403, 404]).to.include(pm.response.code);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/posts/:postId/comments/:commentId",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "posts",
+                ":postId",
+                "comments",
+                ":commentId"
+              ],
+              "variable": [
+                {
+                  "key": "postId",
+                  "value": "{{postId}}",
+                  "description": "Path variable postId"
+                },
+                {
+                  "key": "commentId",
+                  "value": "{{commentId}}",
+                  "description": "Path variable commentId"
+                }
+              ]
+            },
+            "description": "Deletes a comment. Only the comment author or an admin can delete.",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{authToken}}",
+                  "type": "string"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "34. Toggle Like on Post",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Likes count returned\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.data).to.have.property(\"likes\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/posts/:id/like",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "posts",
+                ":id",
+                "like"
+              ],
+              "variable": [
+                {
+                  "key": "id",
+                  "value": "{{postId}}",
+                  "description": "Path variable id"
+                }
+              ]
+            },
+            "description": "Increments like counter for a post. Supports optional authentication."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "⚫ Module 7: Advanced & Interview-Level",
+      "description": "Complex scenarios asked in senior developer interviews: simulated network delays, random 500 retries, binary image streams, form-urlencoded payloads, and strict validator errors.",
+      "item": [
+        {
+          "name": "35. Delayed Response (Timeout Practice)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Delayed response verified\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.data.delay_seconds).to.eql(3);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/advanced/delayed?seconds=3",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "advanced",
+                "delayed"
+              ],
+              "query": [
+                {
+                  "key": "seconds",
+                  "value": "3",
+                  "description": "Filter or parameter: seconds"
+                }
+              ]
+            },
+            "description": "Holds the connection and only responds after N seconds (1-30s).\n\n### Interview Practice\nConfigure your OkHttp/Dio connectTimeout and readTimeout lower than this delay to test timeout exception handling in your app!"
+          },
+          "response": []
+        },
+        {
+          "name": "36. Random Server Error (50% Chance)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is either 200 or 500\", function () {",
+                  "    pm.expect([200, 500]).to.include(pm.response.code);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/advanced/random-error",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "advanced",
+                "random-error"
+              ]
+            },
+            "description": "Randomly returns `200 OK` (50% chance) or `500 Internal Server Error` (50% chance).\n\n### Interview Practice\nImplement exponential backoff retry logic in your HTTP client (e.g. using OkHttp Interceptor or Polly/Dio retry)."
+          },
+          "response": []
+        },
+        {
+          "name": "37. Form URL-Encoded POST",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Form data recognized\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.data.received_fields.username).to.eql(\"johndoe\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/advanced/form-data",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "advanced",
+                "form-data"
+              ]
+            },
+            "description": "Accepts `application/x-www-form-urlencoded` payloads.\n\n### Android Retrofit Tip\n```kotlin\n@FormUrlEncoded\n@POST(\"api/advanced/form-data\")\nsuspend fun submitForm(@Field(\"username\") user: String): Response<ApiResponse>\n```",
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "key": "username",
+                  "value": "johndoe",
+                  "type": "text"
+                },
+                {
+                  "key": "country",
+                  "value": "India",
+                  "type": "text"
+                },
+                {
+                  "key": "experience_years",
+                  "value": "5",
+                  "type": "text"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "38. Large Response (1000+ Items)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"1000 items returned\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.total).to.eql(1000);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/advanced/large-response?count=1000",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "advanced",
+                "large-response"
+              ],
+              "query": [
+                {
+                  "key": "count",
+                  "value": "1000",
+                  "description": "Filter or parameter: count"
+                }
+              ]
+            },
+            "description": "Generates 1000+ items on-the-fly (query `count` can be 100 to 5000).\n\n### Android Practice\nTest memory footprints and background JSON parsing with Moshi/Kotlinx Serialization."
+          },
+          "response": []
+        },
+        {
+          "name": "39. Binary Image Stream Response",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Content-Type is image/png\", function () {",
+                  "    pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"image/png\");",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/advanced/image-response",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "advanced",
+                "image-response"
+              ]
+            },
+            "description": "Returns binary raw image data (`image/png`) directly in the HTTP stream instead of JSON.\n\n### Android Practice\nLoad directly into Coil, Glide, or Coil3 using `ResponseBody.byteStream()`."
+          },
+          "response": []
+        },
+        {
+          "name": "40. HTTP Status Code Simulator",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code matches requested code\", function () {",
+                  "    pm.expect(pm.response.code).to.eql(404);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/advanced/status/:code",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "advanced",
+                "status",
+                ":code"
+              ],
+              "variable": [
+                {
+                  "key": "code",
+                  "value": "404",
+                  "description": "Path variable code"
+                }
+              ]
+            },
+            "description": "Simulates ANY requested HTTP status code.\n\nSupported codes: `200`, `201`, `204`, `301`, `302`, `400`, `401`, `403`, `404`, `405`, `409`, `422`, `429`, `500`, `502`, `503`."
+          },
+          "response": []
+        },
+        {
+          "name": "41. Rate Limited Endpoint (5 req/min)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200 or 429\", function () {",
+                  "    pm.expect([200, 429]).to.include(pm.response.code);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/advanced/rate-limited",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "advanced",
+                "rate-limited"
+              ]
+            },
+            "description": "Strictly rate-limited to 5 requests per minute.\n\nSend 6 requests in a row to observe HTTP `429 Too Many Requests`."
+          },
+          "response": []
+        },
+        {
+          "name": "42a. Strict Validation - Success",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 200 OK\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Validation succeeded\", function () {",
+                  "    pm.expect(pm.response.json().success).to.eql(true);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/advanced/validate",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "advanced",
+                "validate"
+              ]
+            },
+            "description": "Validates strict criteria across all fields (regex email, uppercase/lowercase/symbol password, phone number format, URL format).",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"alex.mercer@example.com\",\n  \"password\": \"SecurePassword123!\",\n  \"name\": \"Alex Mercer\",\n  \"age\": 28,\n  \"phone\": \"+919876543210\",\n  \"website\": \"https://example.com\",\n  \"agree_terms\": true\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "42b. Strict Validation - Field Errors",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 422 Unprocessable Entity\", function () {",
+                  "    pm.response.to.have.status(422);",
+                  "});",
+                  "pm.test(\"Detailed validation errors list returned\", function () {",
+                  "    var jsonData = pm.response.json();",
+                  "    pm.expect(jsonData.error.details).to.be.an(\"array\");",
+                  "    pm.expect(jsonData.error.details.length).to.be.above(0);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "type": "text"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/advanced/validate",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "advanced",
+                "validate"
+              ]
+            },
+            "description": "Intentionally sends invalid fields to test client-side rendering of multiple form error messages.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"not-an-email\",\n  \"password\": \"short\",\n  \"name\": \"A\",\n  \"age\": 5,\n  \"phone\": \"123\",\n  \"website\": \"invalid-url\",\n  \"agree_terms\": false\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "⚪ Module 8: Error Simulation",
+      "description": "Deterministic error status codes with detailed educational explanations and tips for Retrofit and Dio error handling.",
+      "item": [
+        {
+          "name": "43. 400 Bad Request",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 400\", function () {",
+                  "    pm.response.to.have.status(400);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/errors/400",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "errors",
+                "400"
+              ]
+            },
+            "description": "Returns HTTP 400 Bad Request.\n\n### Android Retrofit Tip\nInspect response with `response.errorBody()?.string()`."
+          },
+          "response": []
+        },
+        {
+          "name": "44. 401 Unauthorized",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 401\", function () {",
+                  "    pm.response.to.have.status(401);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/errors/401",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "errors",
+                "401"
+              ]
+            },
+            "description": "Returns HTTP 401 Unauthorized.\n\n### Android Action\nClear stored credentials and navigate user back to the login screen."
+          },
+          "response": []
+        },
+        {
+          "name": "45. 403 Forbidden",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 403\", function () {",
+                  "    pm.response.to.have.status(403);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/errors/403",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "errors",
+                "403"
+              ]
+            },
+            "description": "Returns HTTP 403 Forbidden. User is authenticated but lacks required authorization/role."
+          },
+          "response": []
+        },
+        {
+          "name": "46. 404 Not Found",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 404\", function () {",
+                  "    pm.response.to.have.status(404);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/errors/404",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "errors",
+                "404"
+              ]
+            },
+            "description": "Returns HTTP 404 Not Found. Resource or endpoint does not exist."
+          },
+          "response": []
+        },
+        {
+          "name": "47. 500 Internal Server Error",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test(\"Status code is 500\", function () {",
+                  "    pm.response.to.have.status(500);",
+                  "});"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/errors/500",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "errors",
+                "500"
+              ]
+            },
+            "description": "Returns HTTP 500 Internal Server Error. Demonstrates server-side crash or unhandled condition."
+          },
+          "response": []
+        },
+        {
+          "name": "48. Timeout Simulator (Hangs)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "// This request is expected to trigger a client timeout"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{baseUrl}}/api/errors/timeout",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "errors",
+                "timeout"
+              ]
+            },
+            "description": "Keeps connection open indefinitely without sending a response.\n\nTest that your client's readTimeout triggers a SocketTimeoutException as expected."
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

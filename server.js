@@ -55,6 +55,22 @@ app.use('/api/secure', headerRoutes);   // /api/secure/data (API key)
 app.use('/api/advanced', advancedRoutes); // /api/advanced/delayed, rate-limited, etc.
 app.use('/api/errors', errorRoutes);    // /api/errors/400, 401, 404, 500, timeout
 
+// ===== Postman Collection Downloads =====
+app.get('/postman/collection.json', (req, res) => {
+  const filePath = path.join(__dirname, 'postman', 'DummyApi.postman_collection.json');
+  res.download(filePath, 'DummyApi.postman_collection.json');
+});
+
+app.get('/postman/environment-render.json', (req, res) => {
+  const filePath = path.join(__dirname, 'postman', 'DummyApi_Render_Environment.postman_environment.json');
+  res.download(filePath, 'DummyApi_Render_Environment.postman_environment.json');
+});
+
+app.get('/postman/environment-local.json', (req, res) => {
+  const filePath = path.join(__dirname, 'postman', 'DummyApi_Local_Environment.postman_environment.json');
+  res.download(filePath, 'DummyApi_Local_Environment.postman_environment.json');
+});
+
 // ===== Root - API Documentation Page =====
 app.get('/', (req, res) => {
   const baseUrl = `${req.protocol}://${req.get('host')}`;
@@ -236,6 +252,17 @@ function generateDocPage(baseUrl) {
       <p>Password: <code>password123</code></p>
       <p>API Key: <code>practice-api-key-2024</code></p>
       <p style="margin-top:8px;font-size:0.85rem;color:#64748b;">Base URL: <code>${baseUrl}</code></p>
+    </div>
+    <div style="margin-top: 15px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+      <a href="/postman/collection.json" download class="btn-download" style="background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); color: white; padding: 10px 20px; border-radius: 8px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 14px rgba(249, 115, 22, 0.4);">
+        <span>📦</span> Download Postman Collection (All 48 APIs)
+      </a>
+      <a href="/postman/environment-render.json" download class="btn-download" style="background: #1e293b; border: 1px solid #475569; color: #38bdf8; padding: 10px 18px; border-radius: 8px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+        <span>🌐</span> Render Environment
+      </a>
+      <a href="/postman/environment-local.json" download class="btn-download" style="background: #1e293b; border: 1px solid #475569; color: #a78bfa; padding: 10px 18px; border-radius: 8px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+        <span>💻</span> Localhost Environment
+      </a>
     </div>
   </header>
 
