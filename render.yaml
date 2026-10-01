@@ -1,0 +1,22 @@
+services:
+  - type: web
+    name: dummy-api
+    runtime: node
+    plan: free
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: JWT_SECRET
+        generateValue: true
+      - key: JWT_REFRESH_SECRET
+        generateValue: true
+      - key: JWT_EXPIRES_IN
+        value: 1h
+      - key: JWT_REFRESH_EXPIRES_IN
+        value: 7d
+      - key: API_KEY
+        value: practice-api-key-2024
+      - key: MAX_FILE_SIZE
+        value: 52428800
