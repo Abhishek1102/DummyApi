@@ -803,11 +803,12 @@ function generateTutorialsHtml(baseUrl, activeSlug = null) {
     <nav class="topbar-links">
       <a href="/">📡 API Endpoints</a>
       <a href="/tutorials" class="active">📘 Code Tutorials & Recipes</a>
+      <a href="/project">📁 Project Explorer</a>
       <a href="/postman/collection.json" download>📦 Postman Collection</a>
     </nav>
     <div class="topbar-right">
-      <a href="https://flutter.dev" target="_blank" class="stat-badge" style="text-decoration:none;">
-        <span>Flutter SDK Ready</span>
+      <a href="/project" class="stat-badge" style="text-decoration:none; background:#ecfdf5; border:1px solid #a7f3d0; color:#047857; font-weight:600;">
+        <span>📁 Open Project IDE</span>
       </a>
     </div>
   </header>
@@ -838,6 +839,11 @@ function generateTutorialsHtml(baseUrl, activeSlug = null) {
           <div class="stat-badge">⚡ <strong>100%</strong> Compile-Ready Dart</div>
           <div class="stat-badge">🎯 <strong>Senior Q&A</strong> Talking Points</div>
           <div class="stat-badge">📋 <strong>1-Click</strong> Copy to Clipboard</div>
+        </div>
+        <div style="margin-top: 16px;">
+          <a href="/project" style="display:inline-flex; align-items:center; gap:8px; background:#059669; color:#ffffff; padding:9px 18px; border-radius:8px; font-weight:600; text-decoration:none; font-size:0.86rem; box-shadow:0 2px 8px rgba(5,150,105,0.25);">
+            <span>📁 Open Full Built Project Explorer (IDE Tree) →</span>
+          </a>
         </div>
       </section>
 

@@ -49,6 +49,7 @@ const headerRoutes = require('./routes/headers');
 const advancedRoutes = require('./routes/advanced');
 const errorRoutes = require('./routes/errors');
 const tutorialsRoutes = require('./routes/tutorials');
+const projectRoutes = require('./routes/project');
 
 app.use('/api', basicRoutes);          // /api/hello, /api/products, /api/categories
 app.use('/api/auth', authRoutes);       // /api/auth/login, register, etc.
@@ -65,6 +66,12 @@ app.use('/tutorials', tutorialsRoutes);
 app.use('/guides', tutorialsRoutes);
 app.use('/cookbook', tutorialsRoutes);
 app.use('/recipes', tutorialsRoutes);
+
+// ===== Flutter Project IDE & Codebase Explorer =====
+app.use('/project', projectRoutes);
+app.use('/explorer', projectRoutes);
+app.use('/codebase', projectRoutes);
+app.use('/ide', projectRoutes);
 
 // ===== Postman Collection Downloads =====
 app.get('/postman/collection.json', (req, res) => {
@@ -263,10 +270,13 @@ function generateDocPage(baseUrl) {
       </a>
       <span style="background:rgba(56,189,248,0.15);color:#38bdf8;padding:2px 8px;border-radius:12px;font-size:0.75rem;font-weight:600;">API Server</span>
     </div>
-    <div style="display:flex;align-items:center;gap:16px;">
+    <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;">
       <a href="/" style="color:#10b981;font-weight:600;font-size:0.9rem;text-decoration:none;">📡 Endpoints</a>
       <a href="/tutorials" style="color:#ffffff;font-weight:600;font-size:0.9rem;text-decoration:none;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#059669,#047857);padding:6px 14px;border-radius:6px;box-shadow:0 2px 8px rgba(5,150,105,0.3);">
         <span>📘</span> Flutter Architecture Tutorials
+      </a>
+      <a href="/project" style="color:#ffffff;font-weight:600;font-size:0.9rem;text-decoration:none;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#0d9488,#0f766e);padding:6px 14px;border-radius:6px;box-shadow:0 2px 8px rgba(13,148,136,0.3);">
+        <span>📁</span> Flutter Project IDE Tree
       </a>
     </div>
   </div>
@@ -300,15 +310,27 @@ function generateDocPage(baseUrl) {
       </a>
     </div>
 
-    <!-- Flutter Tutorials Banner -->
-    <div style="margin-top: 20px; max-width: 600px; margin-left: auto; margin-right: auto; background: linear-gradient(135deg, rgba(5, 150, 105, 0.15), rgba(16, 185, 129, 0.08)); border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 10px; padding: 14px 20px; text-align: left; display: flex; align-items: center; justify-content: space-between; gap: 14px;">
-      <div>
-        <div style="font-weight: 700; color: #10b981; font-size: 0.95rem;">📘 Flutter Architecture & Code Recipes</div>
-        <div style="font-size: 0.82rem; color: #94a3b8;">Production Dio ApiClient, MVVM templates, Repositories, and Pagination code ready to copy & paste.</div>
+    <!-- Flutter Tutorials & IDE Banners -->
+    <div style="margin-top: 20px; max-width: 780px; margin-left: auto; margin-right: auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 14px;">
+      <div style="background: linear-gradient(135deg, rgba(5, 150, 105, 0.15), rgba(16, 185, 129, 0.08)); border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 10px; padding: 14px 18px; text-align: left; display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+        <div>
+          <div style="font-weight: 700; color: #10b981; font-size: 0.95rem;">📘 Architecture Tutorials</div>
+          <div style="font-size: 0.8rem; color: #94a3b8; margin-top: 2px;">Production Dio ApiClient, MVVM, Repositories, and Pagination code.</div>
+        </div>
+        <a href="/tutorials" style="background: #059669; color: white; padding: 8px 14px; border-radius: 6px; font-weight: 600; text-decoration: none; white-space: nowrap; font-size: 0.82rem; display: inline-block;">
+          Tutorials →
+        </a>
       </div>
-      <a href="/tutorials" style="background: #059669; color: white; padding: 8px 16px; border-radius: 6px; font-weight: 600; text-decoration: none; white-space: nowrap; font-size: 0.85rem; display: inline-block;">
-        View Tutorials →
-      </a>
+
+      <div style="background: linear-gradient(135deg, rgba(13, 148, 136, 0.18), rgba(20, 184, 166, 0.08)); border: 1px solid rgba(20, 184, 166, 0.4); border-radius: 10px; padding: 14px 18px; text-align: left; display: flex; align-items: center; justify-content: space-between; gap: 12px;">
+        <div>
+          <div style="font-weight: 700; color: #2dd4bf; font-size: 0.95rem;">📁 Complete Project Tree (IDE)</div>
+          <div style="font-size: 0.8rem; color: #94a3b8; margin-top: 2px;">Interactive file explorer for the entire pre-built Flutter project codebase.</div>
+        </div>
+        <a href="/project" style="background: #0d9488; color: white; padding: 8px 14px; border-radius: 6px; font-weight: 600; text-decoration: none; white-space: nowrap; font-size: 0.82rem; display: inline-block;">
+          Open IDE →
+        </a>
+      </div>
     </div>
   </header>
 
