@@ -1775,7 +1775,7 @@ class ResponseCard extends StatelessWidget {
           children: [
             Row(
               children: [
-                const Icon(Icons.code_rounded, color: Colors.lightBlueAccent, size: 18),
+                const Icon(Icons.code_rounded, color: Colors.teal, size: 18),
                 const SizedBox(width: 8),
                 Text(
                   title,
@@ -1816,7 +1816,7 @@ class ResponseCard extends StatelessWidget {
                   style: const TextStyle(
                     fontFamily: 'monospace',
                     fontSize: 12,
-                    color: Color(0xFF38BDF8),
+                    color: Color(0xFF34D399),
                   ),
                 ),
               ),

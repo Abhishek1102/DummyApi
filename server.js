@@ -264,8 +264,8 @@ function generateDocPage(baseUrl) {
       <span style="background:rgba(56,189,248,0.15);color:#38bdf8;padding:2px 8px;border-radius:12px;font-size:0.75rem;font-weight:600;">API Server</span>
     </div>
     <div style="display:flex;align-items:center;gap:16px;">
-      <a href="/" style="color:#38bdf8;font-weight:600;font-size:0.9rem;text-decoration:none;">📡 Endpoints</a>
-      <a href="/tutorials" style="color:#f8fafc;font-weight:600;font-size:0.9rem;text-decoration:none;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#0284c7,#0369a1);padding:6px 14px;border-radius:6px;box-shadow:0 2px 8px rgba(2,132,199,0.3);">
+      <a href="/" style="color:#10b981;font-weight:600;font-size:0.9rem;text-decoration:none;">📡 Endpoints</a>
+      <a href="/tutorials" style="color:#ffffff;font-weight:600;font-size:0.9rem;text-decoration:none;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#059669,#047857);padding:6px 14px;border-radius:6px;box-shadow:0 2px 8px rgba(5,150,105,0.3);">
         <span>📘</span> Flutter Architecture Tutorials
       </a>
     </div>
@@ -292,7 +292,7 @@ function generateDocPage(baseUrl) {
       <a href="/postman/collection.json" download class="btn-download" style="background: linear-gradient(135deg, #f97316 0%, #ea580c 100%); color: white; padding: 10px 20px; border-radius: 8px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 8px; box-shadow: 0 4px 14px rgba(249, 115, 22, 0.4);">
         <span>📦</span> Download Postman Collection (All 48 APIs)
       </a>
-      <a href="/postman/environment-render.json" download class="btn-download" style="background: #1e293b; border: 1px solid #475569; color: #38bdf8; padding: 10px 18px; border-radius: 8px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
+      <a href="/postman/environment-render.json" download class="btn-download" style="background: #1e293b; border: 1px solid #475569; color: #34d399; padding: 10px 18px; border-radius: 8px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
         <span>🌐</span> Render Environment
       </a>
       <a href="/postman/environment-local.json" download class="btn-download" style="background: #1e293b; border: 1px solid #475569; color: #a78bfa; padding: 10px 18px; border-radius: 8px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
@@ -301,12 +301,12 @@ function generateDocPage(baseUrl) {
     </div>
 
     <!-- Flutter Tutorials Banner -->
-    <div style="margin-top: 20px; max-width: 600px; margin-left: auto; margin-right: auto; background: linear-gradient(135deg, rgba(2, 132, 199, 0.25), rgba(56, 189, 248, 0.1)); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 10px; padding: 14px 20px; text-align: left; display: flex; align-items: center; justify-content: space-between; gap: 14px;">
+    <div style="margin-top: 20px; max-width: 600px; margin-left: auto; margin-right: auto; background: linear-gradient(135deg, rgba(5, 150, 105, 0.15), rgba(16, 185, 129, 0.08)); border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 10px; padding: 14px 20px; text-align: left; display: flex; align-items: center; justify-content: space-between; gap: 14px;">
       <div>
-        <div style="font-weight: 700; color: #38bdf8; font-size: 0.95rem;">📘 Flutter Architecture & Code Recipes</div>
+        <div style="font-weight: 700; color: #10b981; font-size: 0.95rem;">📘 Flutter Architecture & Code Recipes</div>
         <div style="font-size: 0.82rem; color: #94a3b8;">Production Dio ApiClient, MVVM templates, Repositories, and Pagination code ready to copy & paste.</div>
       </div>
-      <a href="/tutorials" style="background: #0284c7; color: white; padding: 8px 16px; border-radius: 6px; font-weight: 600; text-decoration: none; white-space: nowrap; font-size: 0.85rem; display: inline-block;">
+      <a href="/tutorials" style="background: #059669; color: white; padding: 8px 16px; border-radius: 6px; font-weight: 600; text-decoration: none; white-space: nowrap; font-size: 0.85rem; display: inline-block;">
         View Tutorials →
       </a>
     </div>

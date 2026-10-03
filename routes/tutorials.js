@@ -150,36 +150,42 @@ function generateTutorialsHtml(baseUrl, activeSlug = null) {
   <title>Flutter Architecture Cookbook & Production Tutorials</title>
   <meta name="description" content="Official Flutter developer tutorials, production-ready Dio networking, MVVM state management, and Clean Architecture recipes for engineers.">
   
-  <!-- Google Fonts & Prism Syntax Highlighting -->
+  <!-- Google Fonts & Prism Light Syntax Highlighting -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css">
   
   <style>
     :root {
-      --bg-dark: #0b1120;
-      --bg-surface: #0f172a;
-      --bg-card: #1e293b;
-      --bg-card-hover: #243248;
-      --border-color: #334155;
-      --border-light: #475569;
-      --primary: #38bdf8;
-      --primary-hover: #0284c7;
-      --accent: #818cf8;
-      --success: #34d399;
-      --warning: #fbbf24;
-      --text-main: #f1f5f9;
-      --text-muted: #94a3b8;
-      --text-dim: #64748b;
-      --code-bg: #090d16;
+      --bg-body: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-card: #ffffff;
+      --bg-card-muted: #f8fafc;
+      --bg-hover: #f1f5f9;
+      --border-color: #e2e8f0;
+      --border-light: #cbd5e1;
+      --border-strong: #94a3b8;
+      --primary: #059669; /* Emerald Green - ZERO BLUE */
+      --primary-hover: #047857;
+      --primary-subtle: #ecfdf5;
+      --primary-border: #a7f3d0;
+      --accent: #16a34a;
+      --success: #10b981;
+      --warning: #d97706; /* Warm Amber */
+      --text-main: #0f172a; /* Deep Charcoal */
+      --text-secondary: #334155; /* Slate 700 */
+      --text-muted: #64748b; /* Slate 500 */
+      --text-dim: #94a3b8; /* Slate 400 */
+      --code-bg: #f8fafc;
+      --code-border: #e2e8f0;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; }
     body {
       font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background-color: var(--bg-dark);
+      background-color: var(--bg-body);
       color: var(--text-main);
       line-height: 1.6;
       font-size: 15px;
@@ -190,7 +196,7 @@ function generateTutorialsHtml(baseUrl, activeSlug = null) {
       position: sticky;
       top: 0;
       z-index: 100;
-      background: rgba(15, 23, 42, 0.92);
+      background: rgba(255, 255, 255, 0.96);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border-color);
       display: flex;
@@ -216,19 +222,19 @@ function generateTutorialsHtml(baseUrl, activeSlug = null) {
     .brand-icon {
       width: 28px;
       height: 28px;
-      background: linear-gradient(135deg, #0284c7, #38bdf8);
+      background: linear-gradient(135deg, #059669, #10b981);
       border-radius: 6px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: 800;
-      color: white;
+      color: #ffffff;
       font-size: 14px;
     }
     .brand-tag {
-      background: rgba(56, 189, 248, 0.15);
+      background: var(--primary-subtle);
       color: var(--primary);
-      border: 1px solid rgba(56, 189, 248, 0.3);
+      border: 1px solid var(--primary-border);
       padding: 2px 8px;
       border-radius: 12px;
       font-size: 0.72rem;
@@ -240,7 +246,7 @@ function generateTutorialsHtml(baseUrl, activeSlug = null) {
       gap: 20px;
     }
     .topbar-links a {
-      color: var(--text-muted);
+      color: var(--text-secondary);
       text-decoration: none;
       font-size: 0.9rem;
       font-weight: 500;
@@ -248,6 +254,7 @@ function generateTutorialsHtml(baseUrl, activeSlug = null) {
     }
     .topbar-links a:hover, .topbar-links a.active {
       color: var(--primary);
+      font-weight: 600;
     }
     .topbar-right {
       display: flex;
@@ -279,31 +286,32 @@ function generateTutorialsHtml(baseUrl, activeSlug = null) {
       gap: 20px;
     }
     .sidebar::-webkit-scrollbar { width: 6px; }
-    .sidebar::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 4px; }
+    .sidebar::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 4px; }
 
     .search-box {
       position: relative;
     }
     .search-input {
       width: 100%;
-      background: var(--bg-card);
-      border: 1px solid var(--border-color);
+      background: #ffffff;
+      border: 1px solid var(--border-light);
       border-radius: 8px;
       padding: 9px 12px 9px 34px;
       color: var(--text-main);
       font-size: 0.85rem;
       outline: none;
-      transition: border-color 0.2s;
+      transition: border-color 0.2s, box-shadow 0.2s;
     }
     .search-input:focus {
       border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.12);
     }
     .search-icon {
       position: absolute;
       left: 10px;
       top: 50%;
       transform: translateY(-50%);
-      color: var(--text-dim);
+      color: var(--text-muted);
       font-size: 14px;
     }
 
@@ -315,7 +323,7 @@ function generateTutorialsHtml(baseUrl, activeSlug = null) {
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      color: var(--text-dim);
+      color: var(--text-muted);
       margin-bottom: 8px;
       padding-left: 10px;
     }
@@ -330,7 +338,7 @@ function generateTutorialsHtml(baseUrl, activeSlug = null) {
       gap: 10px;
       padding: 7px 10px;
       border-radius: 6px;
-      color: var(--text-muted);
+      color: var(--text-secondary);
       text-decoration: none;
       font-size: 0.86rem;
       font-weight: 500;
@@ -345,14 +353,14 @@ function generateTutorialsHtml(baseUrl, activeSlug = null) {
       transition: background 0.15s;
     }
     .nav-item:hover {
-      background: var(--bg-card);
+      background: var(--bg-hover);
       color: var(--text-main);
     }
     .nav-item:hover .nav-dot {
       background: var(--primary);
     }
     .nav-item.active {
-      background: rgba(56, 189, 248, 0.12);
+      background: var(--primary-subtle);
       color: var(--primary);
       font-weight: 600;
     }
@@ -365,44 +373,36 @@ function generateTutorialsHtml(baseUrl, activeSlug = null) {
       flex: 1;
       min-width: 0;
       padding: 40px 48px 80px 48px;
+      background: #ffffff;
       overflow-y: auto;
     }
 
     /* Hero Banner */
     .hero-banner {
-      background: linear-gradient(135deg, rgba(30, 41, 59, 0.8) 0%, rgba(15, 23, 42, 0.95) 100%);
+      background: linear-gradient(135deg, #f8fafc 0%, #ffffff 100%);
       border: 1px solid var(--border-color);
       border-radius: 14px;
       padding: 30px;
       margin-bottom: 40px;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
       position: relative;
       overflow: hidden;
-    }
-    .hero-banner::before {
-      content: '';
-      position: absolute;
-      top: -50px;
-      right: -50px;
-      width: 200px;
-      height: 200px;
-      background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, transparent 70%);
-      pointer-events: none;
     }
     .hero-title {
       font-size: 1.85rem;
       font-weight: 800;
-      color: #ffffff;
+      color: var(--text-main);
       margin-bottom: 8px;
     }
     .hero-subtitle {
-      color: var(--text-muted);
+      color: var(--text-secondary);
       font-size: 1rem;
       max-width: 780px;
       line-height: 1.6;
     }
     .hero-stats {
       display: flex;
-      gap: 20px;
+      gap: 16px;
       margin-top: 18px;
       flex-wrap: wrap;
     }
@@ -410,12 +410,12 @@ function generateTutorialsHtml(baseUrl, activeSlug = null) {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      background: var(--bg-card);
+      background: #ffffff;
       border: 1px solid var(--border-color);
       padding: 5px 12px;
       border-radius: 20px;
       font-size: 0.8rem;
-      color: var(--text-muted);
+      color: var(--text-secondary);
     }
     .stat-badge strong {
       color: var(--primary);
@@ -438,11 +438,11 @@ function generateTutorialsHtml(baseUrl, activeSlug = null) {
       align-items: center;
       gap: 8px;
       font-size: 0.8rem;
-      color: var(--text-dim);
+      color: var(--text-muted);
       margin-bottom: 12px;
     }
     .breadcrumbs a {
-      color: var(--text-muted);
+      color: var(--text-secondary);
       text-decoration: none;
     }
     .breadcrumbs a:hover {
@@ -462,23 +462,23 @@ function generateTutorialsHtml(baseUrl, activeSlug = null) {
       font-weight: 600;
       letter-spacing: 0.02em;
     }
-    .badge-primary { background: rgba(56, 189, 248, 0.15); color: var(--primary); border: 1px solid rgba(56, 189, 248, 0.3); }
-    .badge-muted { background: var(--bg-card); color: var(--text-muted); border: 1px solid var(--border-color); }
+    .badge-primary { background: var(--primary-subtle); color: var(--primary); border: 1px solid var(--primary-border); }
+    .badge-muted { background: var(--bg-hover); color: var(--text-secondary); border: 1px solid var(--border-color); }
 
     .article-title {
       font-size: 1.6rem;
       font-weight: 700;
-      color: #ffffff;
+      color: var(--text-main);
       margin-bottom: 8px;
     }
     .article-desc {
-      color: var(--text-muted);
+      color: var(--text-secondary);
       font-size: 0.98rem;
       line-height: 1.6;
       margin-bottom: 20px;
     }
 
-    /* Callout Box */
+    /* Callout Box - Warm Green Rationale (NO BLUE) */
     .callout {
       border-radius: 10px;
       padding: 16px 20px;
@@ -487,24 +487,26 @@ function generateTutorialsHtml(baseUrl, activeSlug = null) {
       line-height: 1.6;
     }
     .callout-why {
-      background: rgba(14, 165, 233, 0.08);
+      background: #f0fdf4;
       border-left: 4px solid var(--primary);
-      border-right: 1px solid var(--border-color);
-      border-top: 1px solid var(--border-color);
-      border-bottom: 1px solid var(--border-color);
+      border-right: 1px solid #bbf7d0;
+      border-top: 1px solid #bbf7d0;
+      border-bottom: 1px solid #bbf7d0;
+      color: #166534;
     }
     .callout-header {
       display: flex;
       align-items: center;
       gap: 8px;
-      color: var(--primary);
+      color: var(--primary-hover);
       margin-bottom: 6px;
       font-size: 0.92rem;
+      font-weight: 700;
     }
 
     /* Dependencies Card */
     .deps-card {
-      background: var(--bg-surface);
+      background: #ffffff;
       border: 1px solid var(--border-color);
       border-radius: 8px;
       margin-bottom: 20px;
@@ -515,34 +517,35 @@ function generateTutorialsHtml(baseUrl, activeSlug = null) {
       justify-content: space-between;
       align-items: center;
       padding: 8px 14px;
-      background: var(--bg-card);
+      background: var(--bg-card-muted);
       border-bottom: 1px solid var(--border-color);
       font-size: 0.8rem;
-      color: var(--text-muted);
+      color: var(--text-secondary);
     }
     .deps-code {
       margin: 0 !important;
       padding: 12px 14px !important;
       background: var(--code-bg) !important;
+      color: var(--text-main) !important;
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.82rem;
     }
 
     /* Code Card */
     .code-card {
-      background: var(--bg-surface);
+      background: #ffffff;
       border: 1px solid var(--border-color);
       border-radius: 10px;
       margin-bottom: 24px;
       overflow: hidden;
-      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
     }
     .code-card-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 10px 16px;
-      background: var(--bg-card);
+      background: var(--bg-card-muted);
       border-bottom: 1px solid var(--border-color);
     }
     .file-path {
@@ -552,14 +555,15 @@ function generateTutorialsHtml(baseUrl, activeSlug = null) {
       font-family: 'JetBrains Mono', monospace;
       font-size: 0.85rem;
       color: var(--text-main);
+      font-weight: 600;
     }
     .lang-tag {
-      background: var(--bg-dark);
+      background: #ffffff;
       border: 1px solid var(--border-color);
       padding: 1px 7px;
       border-radius: 4px;
       font-size: 0.72rem;
-      color: var(--text-muted);
+      color: var(--text-secondary);
     }
     .code-actions {
       display: flex;
@@ -567,13 +571,13 @@ function generateTutorialsHtml(baseUrl, activeSlug = null) {
       gap: 10px;
     }
     .action-btn {
-      color: var(--text-muted);
+      color: var(--text-secondary);
       text-decoration: none;
       font-size: 0.78rem;
       padding: 4px 8px;
       border-radius: 4px;
-      background: var(--bg-dark);
-      border: 1px solid var(--border-color);
+      background: #ffffff;
+      border: 1px solid var(--border-light);
     }
     .action-btn:hover {
       color: var(--primary);
@@ -581,8 +585,8 @@ function generateTutorialsHtml(baseUrl, activeSlug = null) {
     }
 
     .copy-btn {
-      background: var(--bg-dark);
-      border: 1px solid var(--border-color);
+      background: #ffffff;
+      border: 1px solid var(--border-light);
       color: var(--text-main);
       padding: 5px 12px;
       border-radius: 6px;
@@ -595,28 +599,28 @@ function generateTutorialsHtml(baseUrl, activeSlug = null) {
       transition: all 0.15s ease;
     }
     .copy-btn:hover {
-      background: var(--border-color);
+      background: var(--bg-hover);
       border-color: var(--primary);
       color: var(--primary);
     }
     .copy-btn.primary {
-      background: linear-gradient(135deg, rgba(2, 132, 199, 0.4), rgba(56, 189, 248, 0.2));
-      border: 1px solid rgba(56, 189, 248, 0.4);
+      background: var(--primary);
+      border: 1px solid var(--primary-hover);
       color: #ffffff;
       font-weight: 600;
     }
     .copy-btn.primary:hover {
-      background: linear-gradient(135deg, rgba(2, 132, 199, 0.7), rgba(56, 189, 248, 0.4));
-      border-color: var(--primary);
+      background: var(--primary-hover);
+      color: #ffffff;
     }
     .copy-btn.mini {
       padding: 3px 8px;
       font-size: 0.75rem;
     }
     .copy-btn.copied {
-      background: #065f46 !important;
-      border-color: #10b981 !important;
-      color: #6ee7b7 !important;
+      background: var(--primary-hover) !important;
+      border-color: var(--primary-hover) !important;
+      color: #ffffff !important;
     }
 
     .code-card-body pre {
@@ -625,16 +629,17 @@ function generateTutorialsHtml(baseUrl, activeSlug = null) {
       background: var(--code-bg) !important;
       font-family: 'JetBrains Mono', Consolas, monospace !important;
       font-size: 0.88rem !important;
-      line-height: 1.55 !important;
+      line-height: 1.6 !important;
       max-height: 520px;
       overflow-y: auto;
+      border-top: 1px solid var(--border-color);
     }
 
     /* Subsections */
     .section-subtitle {
       font-size: 1.15rem;
       font-weight: 600;
-      color: #ffffff;
+      color: var(--text-main);
       margin: 24px 0 12px 0;
       display: flex;
       align-items: center;
@@ -649,7 +654,7 @@ function generateTutorialsHtml(baseUrl, activeSlug = null) {
       margin-top: 10px;
     }
     .interview-card {
-      background: var(--bg-card);
+      background: var(--bg-card-muted);
       border: 1px solid var(--border-color);
       border-radius: 8px;
       padding: 14px 18px;
@@ -659,13 +664,13 @@ function generateTutorialsHtml(baseUrl, activeSlug = null) {
       align-items: flex-start;
       gap: 10px;
       font-weight: 600;
-      color: #f8fafc;
+      color: var(--text-main);
       font-size: 0.92rem;
       margin-bottom: 8px;
     }
     .q-badge {
-      background: #818cf8;
-      color: #0b1120;
+      background: #0f172a;
+      color: #ffffff;
       font-size: 0.7rem;
       font-weight: 800;
       padding: 2px 6px;
@@ -677,13 +682,13 @@ function generateTutorialsHtml(baseUrl, activeSlug = null) {
       display: flex;
       align-items: flex-start;
       gap: 10px;
-      color: var(--text-muted);
+      color: var(--text-secondary);
       font-size: 0.88rem;
       line-height: 1.5;
     }
     .a-badge {
-      background: #34d399;
-      color: #0b1120;
+      background: var(--primary);
+      color: #ffffff;
       font-size: 0.7rem;
       font-weight: 800;
       padding: 2px 6px;
@@ -699,7 +704,7 @@ function generateTutorialsHtml(baseUrl, activeSlug = null) {
     }
     .back-to-top {
       font-size: 0.8rem;
-      color: var(--text-dim);
+      color: var(--text-muted);
       text-decoration: none;
     }
     .back-to-top:hover {
@@ -711,12 +716,12 @@ function generateTutorialsHtml(baseUrl, activeSlug = null) {
       position: fixed;
       bottom: 24px;
       right: 24px;
-      background: #1e293b;
-      border: 1px solid #10b981;
-      color: #f1f5f9;
+      background: #0f172a;
+      border: 1px solid #334155;
+      color: #ffffff;
       padding: 12px 20px;
       border-radius: 8px;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.15);
       display: flex;
       align-items: center;
       gap: 10px;
@@ -737,6 +742,39 @@ function generateTutorialsHtml(baseUrl, activeSlug = null) {
       font-size: 1.1rem;
     }
 
+    /* Prism Light Theme Customizations - ZERO BLUE */
+    code[class*="language-"], pre[class*="language-"] {
+      color: #0f172a !important;
+      text-shadow: none !important;
+    }
+    .token.comment, .token.prolog, .token.doctype, .token.cdata {
+      color: #64748b !important;
+      font-style: italic;
+    }
+    .token.punctuation {
+      color: #334155 !important;
+    }
+    .token.property, .token.tag, .token.boolean, .token.number, .token.constant, .token.symbol {
+      color: #c2410c !important; /* Orange/Crimson - NO BLUE */
+    }
+    .token.selector, .token.attr-name, .token.string, .token.char, .token.builtin {
+      color: #047857 !important; /* Emerald green - NO BLUE */
+    }
+    .token.operator, .token.entity, .token.url {
+      color: #b45309 !important; /* Amber - NO BLUE */
+    }
+    .token.atrule, .token.attr-value, .token.keyword {
+      color: #7c3aed !important; /* Purple - NO BLUE */
+      font-weight: 600;
+    }
+    .token.function, .token.class-name {
+      color: #b91c1c !important; /* Ruby crimson - NO BLUE */
+      font-weight: 600;
+    }
+    .token.regex, .token.important, .token.variable {
+      color: #d97706 !important; /* Amber - NO BLUE */
+    }
+
     /* Responsive */
     @media (max-width: 900px) {
       .sidebar {
@@ -753,7 +791,7 @@ function generateTutorialsHtml(baseUrl, activeSlug = null) {
 </head>
 <body id="top">
 
-  <!-- Top Navigation Bar -->
+  <!-- Top Navigation Bar (Clean Light Theme) -->
   <header class="topbar">
     <div class="topbar-left">
       <a href="/" class="brand">
@@ -796,12 +834,13 @@ function generateTutorialsHtml(baseUrl, activeSlug = null) {
           Battle-tested, ready-to-use Dart templates for mobile engineering interviews and production applications. Complete with Dio networking, native HTTP fallbacks, MVVM ViewModels, clean repository contracts, and infinite scroll pagination.
         </p>
         <div class="hero-stats">
-          <div class="stat-badge">📚 <strong>12</strong> Production Templates</div>
+          <div class="stat-badge">📚 <strong>\${tutorials.length}</strong> Production Templates</div>
           <div class="stat-badge">⚡ <strong>100%</strong> Compile-Ready Dart</div>
           <div class="stat-badge">🎯 <strong>Senior Q&A</strong> Talking Points</div>
           <div class="stat-badge">📋 <strong>1-Click</strong> Copy to Clipboard</div>
         </div>
       </section>
+
 
       <!-- Tutorials List -->
       <div id="tutorialArticles">
