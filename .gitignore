@@ -9,3 +9,13 @@ uploads/documents/*
 *.db
 *.db-shm
 *.db-wal
+
+# Flutter build artifacts & caches
+**/build/
+**/.dart_tool/
+**/.flutter-plugins*
+**/.pub-cache/
+**/.pub/
+**/*.iml
+**/.idea/
+**/.metadata

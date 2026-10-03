@@ -15,6 +15,22 @@ A production-grade Postman collection (v2.1.0) and environments are included in 
 - **Dynamic Resource Chaining:** Newly created product IDs, post IDs, and comment IDs are auto-saved for subsequent calls.
 - **Pre-configured Tests:** Status code and schema assertions on every endpoint.
 
+## 📘 Flutter Architecture Tutorials & Production Code Recipes (`/tutorials`)
+
+In addition to REST endpoints, the server hosts an interactive **Flutter Architecture & Production Code Cookbook** at `/tutorials` (and `/guides`):
+- **Production-Ready Dio `ApiClient`:** Centralized client with BaseOptions, timeouts, interceptors, and file upload.
+- **Pure `package:http` Client:** Fallback client for interview coding tests where external packages like Dio are restricted.
+- **JWT Auth Interceptor & Auto 401 Refresh:** Transparent token refresh queue and request retry.
+- **Custom `ApiException` Hierarchy:** Converts low-level network errors into friendly, domain-specific exceptions.
+- **Clean Architecture Repository & `Result<T>` Pattern:** Sealed class Success/Failure pattern with abstract contracts.
+- **Safe JSON Deserialization:** Zero-dependency manual `fromJson`, `toJson`, and `copyWith` with null-safe casting.
+- **MVVM State Management:** Flutter native `ChangeNotifier` ViewModel with explicit `ViewState` and `ListenableBuilder` integration.
+- **Infinite Scroll Pagination:** `ScrollController` threshold listener with pull-to-refresh and loading indicators.
+- **Local Storage Service:** Encapsulated `SharedPreferences` session and theme manager.
+- **Form Validation & Controllers:** Safe `TextEditingController` disposal and regex email/password checks.
+- **Debounced Search:** Keystroke debounce timer to eliminate unnecessary backend requests.
+- **Senior Flutter Interview Cheatsheet:** In-depth answers for Keys, Widget/Element trees, Isolates, and BuildContext.
+
 ## 🏃 Quick Start
 
 ```bash

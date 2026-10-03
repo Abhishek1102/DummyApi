@@ -1,0 +1,6 @@
+# LEARNING: MVVM Directory Placeholder
+# This directory is reserved for future MVVM (Model-View-ViewModel) architecture implementation.
+# In MVVM:
+# - ViewModels replace Controllers.
+# - ViewModels hold state as `StateNotifier`, `ChangeNotifier`, or `Stream` (RxDart / Riverpod / Bloc).
+# - Views observe the ViewModel without calling direct business functions.

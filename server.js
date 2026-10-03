@@ -48,6 +48,7 @@ const uploadRoutes = require('./routes/upload');
 const headerRoutes = require('./routes/headers');
 const advancedRoutes = require('./routes/advanced');
 const errorRoutes = require('./routes/errors');
+const tutorialsRoutes = require('./routes/tutorials');
 
 app.use('/api', basicRoutes);          // /api/hello, /api/products, /api/categories
 app.use('/api/auth', authRoutes);       // /api/auth/login, register, etc.
@@ -58,6 +59,12 @@ app.use('/api/headers', headerRoutes);  // /api/headers/echo, custom, accept
 app.use('/api/secure', headerRoutes);   // /api/secure/data (API key)
 app.use('/api/advanced', advancedRoutes); // /api/advanced/delayed, rate-limited, etc.
 app.use('/api/errors', errorRoutes);    // /api/errors/400, 401, 404, 500, timeout
+
+// ===== Flutter Architecture Tutorials & Interview Code Recipes =====
+app.use('/tutorials', tutorialsRoutes);
+app.use('/guides', tutorialsRoutes);
+app.use('/cookbook', tutorialsRoutes);
+app.use('/recipes', tutorialsRoutes);
 
 // ===== Postman Collection Downloads =====
 app.get('/postman/collection.json', (req, res) => {
@@ -248,6 +255,22 @@ function generateDocPage(baseUrl) {
   </style>
 </head>
 <body>
+  <div style="background:#0b1120;border-bottom:1px solid #334155;padding:12px 24px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:99;">
+    <div style="display:flex;align-items:center;gap:12px;">
+      <a href="/" style="font-weight:700;color:#f8fafc;font-size:1.1rem;display:flex;align-items:center;gap:8px;text-decoration:none;">
+        <span style="background:#0284c7;color:white;width:26px;height:26px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:13px;font-weight:bold;">⚡</span>
+        DummyApi
+      </a>
+      <span style="background:rgba(56,189,248,0.15);color:#38bdf8;padding:2px 8px;border-radius:12px;font-size:0.75rem;font-weight:600;">API Server</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:16px;">
+      <a href="/" style="color:#38bdf8;font-weight:600;font-size:0.9rem;text-decoration:none;">📡 Endpoints</a>
+      <a href="/tutorials" style="color:#f8fafc;font-weight:600;font-size:0.9rem;text-decoration:none;display:inline-flex;align-items:center;gap:6px;background:linear-gradient(135deg,#0284c7,#0369a1);padding:6px 14px;border-radius:6px;box-shadow:0 2px 8px rgba(2,132,199,0.3);">
+        <span>📘</span> Flutter Architecture Tutorials
+      </a>
+    </div>
+  </div>
+
   <header>
     <h1>🚀 DummyApi</h1>
     <p>API Practice Server for Android & Flutter Developers</p>
@@ -274,6 +297,17 @@ function generateDocPage(baseUrl) {
       </a>
       <a href="/postman/environment-local.json" download class="btn-download" style="background: #1e293b; border: 1px solid #475569; color: #a78bfa; padding: 10px 18px; border-radius: 8px; font-weight: 600; text-decoration: none; display: inline-flex; align-items: center; gap: 8px;">
         <span>💻</span> Localhost Environment
+      </a>
+    </div>
+
+    <!-- Flutter Tutorials Banner -->
+    <div style="margin-top: 20px; max-width: 600px; margin-left: auto; margin-right: auto; background: linear-gradient(135deg, rgba(2, 132, 199, 0.25), rgba(56, 189, 248, 0.1)); border: 1px solid rgba(56, 189, 248, 0.4); border-radius: 10px; padding: 14px 20px; text-align: left; display: flex; align-items: center; justify-content: space-between; gap: 14px;">
+      <div>
+        <div style="font-weight: 700; color: #38bdf8; font-size: 0.95rem;">📘 Flutter Architecture & Code Recipes</div>
+        <div style="font-size: 0.82rem; color: #94a3b8;">Production Dio ApiClient, MVVM templates, Repositories, and Pagination code ready to copy & paste.</div>
+      </div>
+      <a href="/tutorials" style="background: #0284c7; color: white; padding: 8px 16px; border-radius: 6px; font-weight: 600; text-decoration: none; white-space: nowrap; font-size: 0.85rem; display: inline-block;">
+        View Tutorials →
       </a>
     </div>
   </header>
